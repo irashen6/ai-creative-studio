@@ -28,7 +28,6 @@
             min-height: 100vh;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -70,7 +69,6 @@
 
         nav .nav-links a:hover { color: var(--primary); }
 
-        /* Hero Section */
         .hero {
             min-height: 80vh;
             display: flex;
@@ -146,7 +144,6 @@
             50% { opacity: 0.3; }
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -165,7 +162,6 @@
             margin-bottom: 3rem;
         }
 
-        /* Interactive Demo Section */
         .demo-section {
             background: var(--bg-card);
             border-radius: 24px;
@@ -258,6 +254,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            width: fit-content;
         }
 
         .generate-btn:hover {
@@ -317,6 +314,7 @@
 
         .result-content img {
             max-width: 100%;
+            max-height: 400px;
             border-radius: 8px;
             margin-bottom: 1rem;
         }
@@ -338,12 +336,20 @@
             border-radius: 8px;
             padding: 1rem;
             margin-top: 1rem;
+            text-align: left;
         }
 
         .result-info .status {
             color: var(--success);
             font-weight: 600;
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-info .status::before {
+            content: '✓';
         }
 
         .result-info .details {
@@ -351,7 +357,6 @@
             font-size: 0.9rem;
         }
 
-        /* Preset Prompts */
         .preset-prompts {
             display: flex;
             flex-wrap: wrap;
@@ -375,7 +380,10 @@
             border-color: var(--accent);
         }
 
-        /* Features Grid */
+        .preset-prompt::before {
+            content: '→ ';
+        }
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -419,7 +427,6 @@
             font-size: 0.95rem;
         }
 
-        /* Skills Showcase */
         .skills-showcase {
             background: var(--bg-card);
             border-radius: 24px;
@@ -468,7 +475,6 @@
             animation: blink 2s infinite;
         }
 
-        /* Gallery Section */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -480,7 +486,6 @@
             background: var(--bg-card);
             border-radius: 16px;
             overflow: hidden;
-            position: relative;
         }
 
         .gallery-item img,
@@ -504,7 +509,6 @@
             color: var(--primary);
         }
 
-        /* Generated Files List */
         .files-list {
             background: var(--bg-card);
             border-radius: 16px;
@@ -540,7 +544,38 @@
 
         .file-size { color: var(--accent); font-size: 0.9rem; }
 
-        /* Footer */
+        .cli-commands {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .cli-commands h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .cli-commands pre {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .cli-commands pre code {
+            color: var(--accent);
+        }
+
+        .cli-commands pre code .comment {
+            color: var(--text-muted);
+        }
+
         footer {
             text-align: center;
             padding: 4rem 2rem;
@@ -566,7 +601,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.1rem; }
@@ -576,7 +610,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-content">
             <div class="logo">AI Creative Studio</div>
@@ -585,11 +618,11 @@
                 <a href="#features">Features</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#files">Files</a>
+                <a href="#cli">CLI Commands</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>AI Creative Studio</h1>
         <p>Interactive Multi-Skill AI Content Generation Platform</p>
@@ -598,10 +631,9 @@
         </div>
     </section>
 
-    <!-- Interactive Demo Section -->
     <section class="container" id="demo">
         <h2 class="section-title">Live Demo</h2>
-        <p class="section-subtitle">Experience AI content generation in real-time</p>
+        <p class="section-subtitle">Click presets to see sample AI-generated content (using locally generated assets)</p>
 
         <div class="demo-section">
             <div class="demo-tabs">
@@ -610,81 +642,81 @@
                 <button class="demo-tab" data-tab="audio">Audio Synthesis</button>
             </div>
 
-            <!-- Image Generation Panel -->
             <div class="demo-panel active" id="panel-image">
                 <div class="prompt-form">
                     <textarea class="prompt-input" id="image-prompt" placeholder="Describe the image you want to generate... e.g., A futuristic city at sunset with flying cars and neon lights"></textarea>
                     <div class="preset-prompts">
-                        <span class="preset-prompt" data-prompt="Futuristic AI creative studio, holographic interface, neon lights">Futuristic Studio</span>
-                        <span class="preset-prompt" data-prompt="Cyberpunk portrait, glowing cybernetic eyes, purple hair">Cyberpunk Portrait</span>
-                        <span class="preset-prompt" data-prompt="Abstract digital art, flowing colors, geometric patterns">Abstract Art</span>
-                        <span class="preset-prompt" data-prompt="Mountain landscape at golden hour, misty peaks, peaceful">Mountain Landscape</span>
+                        <span class="preset-prompt" data-type="image" data-prompt="Futuristic AI creative studio with holographic displays">Futuristic Studio</span>
+                        <span class="preset-prompt" data-type="image" data-prompt="Cyberpunk portrait with neon lighting">Cyberpunk Portrait</span>
+                        <span class="preset-prompt" data-type="image" data-prompt="Abstract digital art composition">Abstract Art</span>
                     </div>
-                    <button class="generate-btn" onclick="generateImage()">
-                        <span class="btn-text">Generate Image</span>
-                        <span class="btn-loading" style="display:none"><span class="spinner"></span> Generating...</span>
-                    </button>
+                    <button class="generate-btn" id="btn-image">Generate Image (Demo)</button>
                 </div>
                 <div class="result-area" id="image-result">
                     <div class="result-placeholder">
                         <div class="icon">🖼️</div>
-                        <p>Generated images will appear here</p>
+                        <p>Click "Generate Image" to see a demo</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Video Generation Panel -->
             <div class="demo-panel" id="panel-video">
                 <div class="prompt-form">
                     <textarea class="prompt-input" id="video-prompt" placeholder="Describe the video you want to generate... e.g., A peaceful beach with gentle waves at sunset"></textarea>
                     <div class="preset-prompts">
-                        <span class="preset-prompt" data-prompt="Cyberpunk city night, neon signs glowing, rain on streets">Cyberpunk City</span>
-                        <span class="preset-prompt" data-prompt="Underwater coral reef, colorful fish swimming, bubbles rising">Underwater World</span>
-                        <span class="preset-prompt" data-prompt="Space station orbiting Earth, stars twinkling, slow rotation">Space Station</span>
-                        <span class="preset-prompt" data-prompt="Forest in autumn, leaves falling, sunlight rays through trees">Autumn Forest</span>
+                        <span class="preset-prompt" data-type="video" data-prompt="Cyberpunk city at night with neon lights">Cyberpunk City</span>
+                        <span class="preset-prompt" data-type="video" data-prompt="Underwater coral reef with colorful fish">Underwater World</span>
+                        <span class="preset-prompt" data-type="video" data-prompt="AI dashboard with floating holographic cards">Dashboard Animation</span>
                     </div>
-                    <button class="generate-btn" onclick="generateVideo()">
-                        <span class="btn-text">Generate Video</span>
-                        <span class="btn-loading" style="display:none"><span class="spinner"></span> Generating... (this may take a while)</span>
-                    </button>
+                    <button class="generate-btn" id="btn-video">Generate Video (Demo)</button>
                 </div>
                 <div class="result-area" id="video-result">
                     <div class="result-placeholder">
                         <div class="icon">🎬</div>
-                        <p>Generated videos will appear here</p>
+                        <p>Click "Generate Video" to see a demo</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Audio Generation Panel -->
             <div class="demo-panel" id="panel-audio">
                 <div class="prompt-form">
-                    <textarea class="prompt-input" id="audio-prompt" placeholder="Enter the text you want to convert to speech... e.g., Welcome to AI Creative Studio, your gateway to intelligent content creation."></textarea>
+                    <textarea class="prompt-input" id="audio-prompt" placeholder="Enter the text you want to convert to speech... e.g., Welcome to AI Creative Studio."></textarea>
                     <div class="preset-prompts">
-                        <span class="preset-prompt" data-prompt="Hello! Welcome to the future of creative content generation. Let me show you what's possible with AI.">Welcome Message</span>
-                        <span class="preset-prompt" data-prompt="The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.">Pangram</span>
-                        <span class="preset-prompt" data-prompt="Attention all employees, the quarterly meeting has been rescheduled to next Friday at 3 PM.">Announcement</span>
+                        <span class="preset-prompt" data-type="audio" data-prompt="Hello! Welcome to AI Creative Studio. Your gateway to intelligent content creation.">Welcome Message</span>
+                        <span class="preset-prompt" data-type="audio" data-prompt="The quick brown fox jumps over the lazy dog.">Pangram</span>
+                        <span class="preset-prompt" data-type="audio" data-prompt="Attention: The quarterly meeting has been rescheduled to next Friday.">Announcement</span>
                     </div>
-                    <button class="generate-btn" onclick="generateAudio()">
-                        <span class="btn-text">Generate Speech</span>
-                        <span class="btn-loading" style="display:none"><span class="spinner"></span> Generating...</span>
-                    </button>
+                    <button class="generate-btn" id="btn-audio">Generate Speech (Demo)</button>
                 </div>
                 <div class="result-area" id="audio-result">
                     <div class="result-placeholder">
                         <div class="icon">🎤</div>
-                        <p>Generated audio will appear here</p>
+                        <p>Click "Generate Speech" to see a demo</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="cli-commands" id="cli">
+            <h3>How to Generate Real Content</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Use Mavis CLI to generate content (requires Matrix MCP configured):</p>
+            <pre><code><span class="comment"># Image Generation</span>
+mavis mcp call matrix matrix_generate_image '{"prompt": "your description here"}'
+
+<span class="comment"># Video Generation</span>
+mavis mcp call matrix matrix_gen_videos '{"prompt": "your description here"}'
+
+<span class="comment"># Audio Synthesis</span>
+mavis mcp call matrix matrix_synthesize_speech '{"text": "your text here", "voice": "zh-CN"}'
+
+<span class="comment"># Music Generation</span>
+mavis mcp call matrix matrix_batch_text_to_music '{"requests": [{"prompt": "background music style", "duration": 10}]}'</code></pre>
+        </div>
     </section>
 
-    <!-- Features Section -->
     <section class="container" id="features">
         <h2 class="section-title">Core Capabilities</h2>
         <p class="section-subtitle">What you can create with AI Creative Studio</p>
-
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🖼️</div>
@@ -719,7 +751,6 @@
         </div>
     </section>
 
-    <!-- Skills Showcase -->
     <section class="container">
         <div class="skills-showcase">
             <h2 class="section-title">Skills Used</h2>
@@ -753,36 +784,35 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section class="container" id="gallery">
         <h2 class="section-title">AI-Generated Gallery</h2>
         <p class="section-subtitle">Sample outputs from this project</p>
         <div class="gallery">
             <div class="gallery-item">
-                <img src="assets/hero-image.png" alt="AI Generated Hero Image">
+                <img src="assets/hero-image.png" alt="AI Generated Hero Image" onclick="showFullscreen(this)">
                 <div class="label">
                     <strong>Image Generation</strong>
-                    <span>matrix_generate_image - Futuristic hero image</span>
+                    <span>matrix_generate_image - Futuristic hero image (2.0 MB)</span>
                 </div>
             </div>
             <div class="gallery-item">
                 <video src="assets/project-showcase.mp4" controls poster="assets/hero-image.png"></video>
                 <div class="label">
                     <strong>Video Generation</strong>
-                    <span>matrix_gen_videos - Project showcase</span>
+                    <span>matrix_gen_videos - Project showcase video</span>
                 </div>
             </div>
             <div class="gallery-item">
-                <audio controls src="assets/welcome.mp3"></audio>
+                <img src="assets/dashboard-animation.mp4" style="display:none" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <video src="assets/dashboard-animation.mp4" controls poster="assets/hero-image.png" style="width:100%; height:250px; object-fit:cover;"></video>
                 <div class="label">
-                    <strong>Audio Synthesis</strong>
-                    <span>matrix_synthesize_speech - Welcome message</span>
+                    <strong>Dashboard Animation</strong>
+                    <span>matrix_gen_videos - UI showcase (1.5 MB)</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Generated Files Section -->
     <section class="container" id="files">
         <h2 class="section-title">Generated Files</h2>
         <p class="section-subtitle">Documents created using Mavis Skills</p>
@@ -811,10 +841,17 @@
                 </div>
                 <span class="file-size">4 KB</span>
             </div>
+            <div class="file-item">
+                <div class="file-icon">🔊</div>
+                <div class="file-info">
+                    <h4>welcome.mp3</h4>
+                    <span>matrix_synthesize_speech - AI voice synthesis</span>
+                </div>
+                <span class="file-size">56 KB</span>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p><strong>AI Creative Studio</strong> - Multi-Skill Showcase</p>
         <p>Built with Mavis Skills: matrix, minimax-pptx, minimax-pdf, minimax-xlsx, minimax-docx, playwright</p>
@@ -830,9 +867,20 @@
         </p>
     </footer>
 
+    <div id="fullscreen-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); z-index:2000; cursor:pointer;" onclick="closeFullscreen()">
+        <img id="fullscreen-img" style="max-width:90%; max-height:90%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
+    </div>
+
     <script>
+        // Pre-generated demo assets
+        const demoAssets = {
+            image: 'assets/hero-image.png',
+            video: 'assets/project-showcase.mp4',
+            audio: 'assets/welcome.mp3'
+        };
+
         // Tab switching
-        document.querySelectorAll('.demo-tab').forEach(tab => {
+      document.querySelectorAll('.demo-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
@@ -844,194 +892,74 @@
         // Preset prompt clicking
         document.querySelectorAll('.preset-prompt').forEach(prompt => {
             prompt.addEventListener('click', () => {
-                const panel = prompt.closest('.demo-panel');
-                const textarea = panel.querySelector('.prompt-input');
-                textarea.value = prompt.dataset.prompt;
+                const type = prompt.dataset.type;
+                document.querySelector(`#panel-${type} .prompt-input`).value = prompt.dataset.prompt;
             });
         });
 
-        // Image Generation
-        async function generateImage() {
-            const prompt = document.getElementById('image-prompt').value.trim();
-            if (!prompt) {
-                alert('Please enter a prompt');
-                return;
-            }
-
-            const btn = document.querySelector('#panel-image .generate-btn');
-            btn.disabled = true;
-            btn.querySelector('.btn-text').style.display = 'none';
-            btn.querySelector('.btn-loading').style.display = 'inline-flex';
-
-            const resultArea = document.getElementById('image-result');
-            resultArea.innerHTML = '<div class="result-placeholder"><div class="icon">⏳</div><p>Generating image...</p></div>';
-
-            try {
-                // Call Matrix MCP for image generation
-                const response = await fetch('http://localhost:8080/mcp/call', {
-                    method: 'POST',
-             headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        server: 'matrix',
-                        tool: 'matrix_generate_image',
-                        arguments: { prompt }
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.success && data.output_url) {
-                    resultArea.classList.add('has-result');
-                    resultArea.innerHTML = `
-                        <div class="result-content">
-                            <img src="${data.output_url}" alt="Generated Image">
-                            <div class="result-info">
-                                <div class="status">Image Generated Successfully</div>
-                                <div class="details">Prompt: ${prompt}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    throw new Error('Generation failed');
-                }
-            } catch (error) {
-                resultArea.innerHTML = `
-                    <div class="result-placeholder">
-                        <div class="icon">❌</div>
-                        <p>Image generation requires Mavis daemon running with Matrix MCP configured.</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem;">Run: <code>mavis daemon start</code></p>
-                    </div>
-                `;
-            }
-
-            btn.disabled = false;
-            btn.querySelector('.btn-text').style.display = 'inline';
-            btn.querySelector('.btn-loading').style.display = 'none';
+        // Generate functions (Demo mode - shows pre-generated assets)
+        function showLoading(resultId, icon, message) {
+            const area = document.getElementById(resultId);
+            area.innerHTML = `<div class="result-placeholder"><div class="icon">⏳</div><p>${message}</p></div>`;
         }
 
-        // Video Generation
-        async function generateVideo() {
-            const prompt = document.getElementById('video-prompt').value.trim();
-            if (!prompt) {
-                alert('Please enter a prompt');
-                return;
+        function showResult(resultId, type, prompt) {
+            const area = document.getElementById(resultId);
+            area.classList.add('has-result');
+            
+            let content = '';
+            if (type === 'image') {
+                content = `<img src="${demoAssets.image}" alt="Generated Image">`;
+            } else if (type === 'video') {
+                content = `<video src="${demoAssets.video}" controls></video>`;
+            } else if (type === 'audio') {
+                content = `<audio src="${demoAssets.audio}" controls></audio>`;
             }
-
-            const btn = document.querySelector('#panel-video .generate-btn');
-            btn.disabled = true;
-            btn.querySelector('.btn-text').style.display = 'none';
-            btn.querySelector('.btn-loading').style.display = 'inline-flex';
-
-            const resultArea = document.getElementById('video-result');
-            resultArea.innerHTML = '<div class="result-placeholder"><div class="icon">⏳</div><p>Generating video (this takes longer)...</p></div>';
-
-            try {
-                const response = await fetch('http://localhost:8080/mcp/call', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        server: 'matrix',
-                        tool: 'matrix_gen_videos',
-                        arguments: { prompt }
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.success_items && data.success_items[0]) {
-                    resultArea.classList.add('has-result');
-                    resultArea.innerHTML = `
-                        <div class="result-content">
-                            <video src="${data.success_items[0].output_url}" controls></video>
-                            <div class="result-info">
-                                <div class="status">Video Generated Successfully</div>
-                                <div class="details">Prompt: ${prompt}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    throw new Error('Generation failed');
-                }
-            } catch (error) {
-                resultArea.innerHTML = `
-                    <div class="result-placeholder">
-                        <div class="icon">❌</div>
-                        <p>Video generation requires Mavis daemon running with Matrix MCP configured.</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem;">Run: <code>mavis daemon start</code></p>
+            
+            area.innerHTML = `
+                <div class="result-content">
+                    ${content}
+                    <div class="result-info">
+                        <div class="status">Demo Mode - Showing pre-generated asset</div>
+                        <div class="details">Prompt: "${prompt}"<br>Use CLI commands below to generate new content.</div>
                     </div>
-                `;
-            }
-
-            btn.disabled = false;
-            btn.querySelector('.btn-text').style.display = 'inline';
-            btn.querySelector('.btn-loading').style.display = 'none';
+                </div>
+            `;
         }
 
-        // Audio Generation
-        async function generateAudio() {
-            const text = document.getElementById('audio-prompt').value.trim();
-            if (!text) {
-                alert('Please enter text');
-                return;
-            }
+        document.getElementById('btn-image').addEventListener('click', () => {
+            const prompt = document.getElementById('image-prompt').value || 'Futuristic AI creative studio';
+            showLoading('image-result', '🖼️', 'Generating image demo...');
+            setTimeout(() => showResult('image-result', 'image', prompt), 800);
+        });
 
-            const btn = document.querySelector('#panel-audio .generate-btn');
-            btn.disabled = true;
-            btn.querySelector('.btn-text').style.display = 'none';
-            btn.querySelector('.btn-loading').style.display = 'inline-flex';
+        document.getElementById('btn-video').addEventListener('click', () => {
+            const prompt = document.getElementById('video-prompt').value || 'Dashboard animation';
+            showLoading('video-result', '🎬', 'Generating video demo...');
+            setTimeout(() => showResult('video-result', 'video', prompt), 1200);
+        });
 
-            const resultArea = document.getElementById('audio-result');
-            resultArea.innerHTML = '<div class="result-placeholder"><div class="icon">⏳</div><p>Generating speech...</p></div>';
+        document.getElementById('btn-audio').addEventListener('click', () => {
+            const prompt = document.getElementById('audio-prompt').value || 'Welcome message';
+            showLoading('audio-result', '🎤', 'Synthesizing speech demo...');
+            setTimeout(() => showResult('audio-result', 'audio', prompt), 600);
+        });
 
-            try {
-                const response = await fetch('http://localhost:8080/mcp/call', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        server: 'matrix',
-                        tool: 'matrix_synthesize_speech',
-                        arguments: { text, voice: 'zh-CN' }
-                    })
-                });
+        // Fullscreen image viewer
+        function showFullscreen(img) {
+            document.getElementById('fullscreen-img').src = img.src;
+            document.getElementById('fullscreen-modal').style.display = 'block';
+        }
 
-                const data = await response.json();
-                
-                if (data.audio_url) {
-                    resultArea.classList.add('has-result');
-                    resultArea.innerHTML = `
-                        <div class="result-content">
-                            <audio src="${data.audio_url}" controls></audio>
-                            <div class="result-info">
-                                <div class="status">Audio Generated Successfully</div>
-                                <div class="details">Text: ${text}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    throw new Error('Generation failed');
-                }
-            } catch (error) {
-                resultArea.innerHTML = `
-                    <div class="result-placeholder">
-                        <div class="icon">❌</div>
-                        <p>Audio generation requires Mavis daemon running with Matrix MCP configured.</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem;">Run: <code>mavis daemon start</code></p>
-                    </div>
-                `;
-            }
-
-            btn.disabled = false;
-            btn.querySelector('.btn-text').style.display = 'inline';
-            btn.querySelector('.btn-loading').style.display = 'none';
+        function closeFullscreen() {
+            document.getElementById('fullscreen-modal').style.display = 'none';
         }
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
