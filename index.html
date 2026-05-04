@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Creative Studio - Powered by MiniMax Matrix MCP</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: #12122a;
+            --primary: #ffd60a;
+            --secondary: #003566;
+            --accent: #00d4ff;
+            --text: #ffffff;
+            --text-muted: #8b8ba7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a3e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 214, 10, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--secondary), #0055aa);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .skills-showcase {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            background: rgba(0, 53, 102, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .skill-item h4 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-item span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .label {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .files-list {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 1rem;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-info span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .file-size {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .audio-player {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #ffaa00);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .audio-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .audio-info span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tech-tag {
+            background: var(--bg-card);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>AI Creative Studio</h1>
+        <p>Multi-Skill AI Content Generation Platform</p>
+        <div class="badge">
+            <span>Powered by MiniMax Matrix MCP</span>
+        </div>
+    </section>
+
+    <!-- Generated Assets Gallery -->
+    <section class="container">
+        <h2 class="section-title">AI-Generated Assets</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="assets/hero-image.png" alt="AI Generated Hero Image">
+                <div class="label">Image Generation (matrix_generate_image)</div>
+            </div>
+            <div class="gallery-item">
+                <video src="assets/demo-video.mp4" controls poster="assets/hero-image.png"></video>
+                <div class="label">Video Generation (matrix_gen_videos)</div>
+            </div>
+        </div>
+
+        <!-- Audio Player -->
+        <div class="audio-player">
+            <button class="play-btn" onclick="document.getElementById('welcomeAudio').play()">▶</button>
+            <div class="audio-info">
+                <h4>Welcome Message</h4>
+                <span>AI-generated speech using matrix_synthesize_speech</span>
+            </div>
+        </div>
+        <audio id="welcomeAudio" src="assets/welcome.mp3"></audio>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container">
+        <h2 class="section-title">Core Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>Image Generation</h3>
+                <p>Generate stunning images from text descriptions using Text-to-Image and Image-to-Image capabilities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Video Generation</h3>
+                <p>Create dynamic videos from text prompts or animate existing images into video content.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>Audio & Music</h3>
+                <p>Synthesize natural speech or generate background music in various styles and moods.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Document Processing</h3>
+                <p>Create professional reports, presentations, and spreadsheets with built-in formulas.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Web Automation</h3>
+                <p>Browser automation using Playwright for testing and data extraction tasks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Word Documents</h3>
+                <p>Generate professional Word documents with proper formatting and styles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Showcase -->
+    <section class="container">
+        <div class="skills-showcase">
+            <h2 class="section-title">Skills Used in This Project</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <h4>matrix</h4>
+                    <span>Image/Video/Audio Generation</span>
+                </div>
+                <div class="skill-item">
+                    <h4>minimax-pptx</h4>
+                    <span>PowerPoint Generation</span>
+                </div>
+                <div class="skill-item">
+                    <h4>minimax-pdf</h4>
+                    <span>PDF Report Creation</span>
+                </div>
+                <div class="skill-item">
+                    <h4>minimax-xlsx</h4>
+                    <span>Excel Spreadsheet</span>
+                </div>
+                <div class="skill-item">
+                    <h4>minimax-docx</h4>
+                    <span>Word Document Creation</span>
+                </div>
+                <div class="skill-item">
+                    <h4>playwright</h4>
+                    <span>Web Automation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generated Files -->
+    <section class="container">
+        <h2 class="section-title">Generated Files</h2>
+        <div class="files-list">
+            <div class="file-item">
+                <div class="file-icon">🖼️</div>
+                <div class="file-info">
+                    <h4>hero-image.png</h4>
+                    <span>matrix_generate_image</span>
+                </div>
+                <span class="file-size">2.0 MB</span>
+            </div>
+            <div class="file-item">
+                <div class="file-icon">🎬</div>
+                <div class="file-info">
+                    <h4>demo-video.mp4</h4>
+                    <span>matrix_gen_videos</span>
+                </div>
+                <span class="file-size">10.0 MB</span>
+            </div>
+            <div class="file-item">
+                <div class="file-icon">🎤</div>
+                <div class="file-info">
+                    <h4>welcome.mp3</h4>
+                    <span>matrix_synthesize_speech</span>
+                </div>
+                <span class="file-size">56 KB</span>
+            </div>
+            <div class="file-item">
+                <div class="file-icon">📊</div>
+                <div class="file-info">
+                    <h4>ai-creative-studio.pptx</h4>
+                    <span>minimax-pptx (7 slides)</span>
+                </div>
+                <span class="file-size">126 KB</span>
+            </div>
+            <div class="file-item">
+                <div class="file-icon">📈</div>
+                <div class="file-info">
+                    <h4>capabilities.xlsx</h4>
+                    <span>minimax-xlsx (3 sheets with formulas)</span>
+                </div>
+                <span class="file-size">8 KB</span>
+            </div>
+            <div class="file-item">
+                <div class="file-icon">📑</div>
+                <div class="file-info">
+                    <h4>report.html</h4>
+                    <span>minimax-pdf (HTML template for PDF)</span>
+                </div>
+                <span class="file-size">4 KB</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>AI Creative Studio - Multi-Skill Showcase</p>
+        <p>Generated using Mavis Skills: matrix, minimax-pptx, minimax-pdf, minimax-xlsx, minimax-docx, playwright</p>
+        <div class="tech-stack">
+            <span class="tech-tag">PptxGenJS</span>
+            <span class="tech-tag">Openpyxl</span>
+            <span class="tech-tag">Playwright</span>
+            <span class="tech-tag">MiniMax Matrix API</span>
+        </div>
+    </footer>
+</body>
+</html>
